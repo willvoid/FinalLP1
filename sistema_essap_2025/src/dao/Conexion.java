@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 import vista.GUILogin;
 
 public class Conexion {
-	String url = "jdbc:postgresql://localhost:5432/lp1";
+	String url = "jdbc:postgresql://localhost:5432/ESSAP";
     String usuario = "postgres";
     String password = "123";
     GUILogin guilogin = new GUILogin();

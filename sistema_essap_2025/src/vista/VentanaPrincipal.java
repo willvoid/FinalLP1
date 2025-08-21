@@ -8,7 +8,9 @@ import javax.swing.border.EmptyBorder;
 
 import controlador.ClienteController;
 import controlador.NuevoUsuarioController;
+import controlador.PropiedadController;
 import dao.ClienteCrudImpl;
+import dao.PropiedadCrudImpl;
 import dao.UsuarioCrudImpl;
 
 import javax.swing.JLayeredPane;
@@ -79,8 +81,17 @@ public class VentanaPrincipal extends JFrame {
 		mnNewMenu_1.add(mntmNewMenuItem_1);
 		
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Residencias");
+		mntmNewMenuItem_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GUIPropiedad propiedad = new GUIPropiedad();
+		        PropiedadCrudImpl crud = new PropiedadCrudImpl();
+		        PropiedadController ctrl = new PropiedadController(propiedad, crud);
+		        ctrl.mostrarVentana();
+			}
+		});
 		mnNewMenu_1.add(mntmNewMenuItem_2);
 
 	}
 
 }
+

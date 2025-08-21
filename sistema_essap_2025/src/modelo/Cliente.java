@@ -1,5 +1,7 @@
 package modelo;
 
+import java.util.Objects;
+
 public class Cliente {
 	private Integer id;
 	private String nombre;
@@ -59,5 +61,29 @@ public class Cliente {
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
+	@Override
+	public String toString() {
+		return  nombre + " " + apellido + "-" + ruc;
+	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(apellido, categoria, direccion, email, id, nombre, ruc, telefono);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Cliente other = (Cliente) obj;
+		return Objects.equals(apellido, other.apellido) && Objects.equals(categoria, other.categoria)
+				&& Objects.equals(direccion, other.direccion) && Objects.equals(email, other.email)
+				&& Objects.equals(id, other.id) && Objects.equals(nombre, other.nombre)
+				&& Objects.equals(ruc, other.ruc) && Objects.equals(telefono, other.telefono);
+	}
+	
+	
 	
 }
