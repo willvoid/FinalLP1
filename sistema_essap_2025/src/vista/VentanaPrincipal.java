@@ -7,9 +7,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controlador.ClienteController;
+import controlador.MedidorController;
 import controlador.NuevoUsuarioController;
 import controlador.PropiedadController;
 import dao.ClienteCrudImpl;
+import dao.MedidorCrudImpl;
 import dao.PropiedadCrudImpl;
 import dao.UsuarioCrudImpl;
 
@@ -90,6 +92,17 @@ public class VentanaPrincipal extends JFrame {
 			}
 		});
 		mnNewMenu_1.add(mntmNewMenuItem_2);
+		
+		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Medidores");
+		mntmNewMenuItem_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GUIMedidor medidor = new GUIMedidor();
+		        MedidorCrudImpl crud = new MedidorCrudImpl();
+		        MedidorController ctrl = new MedidorController(medidor, crud);
+		        ctrl.mostrarVentana();
+			}
+		});
+		mnNewMenu_1.add(mntmNewMenuItem_3);
 
 	}
 
