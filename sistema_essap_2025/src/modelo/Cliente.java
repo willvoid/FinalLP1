@@ -63,25 +63,14 @@ public class Cliente {
 	}
 	@Override
 	public String toString() {
-		return  nombre + " " + apellido + "-" + ruc;
-	}
-	@Override
-	public int hashCode() {
-		return Objects.hash(apellido, categoria, direccion, email, id, nombre, ruc, telefono);
+		return  id + " - " + nombre + " " + apellido + "-" + ruc;
 	}
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Cliente other = (Cliente) obj;
-		return Objects.equals(apellido, other.apellido) && Objects.equals(categoria, other.categoria)
-				&& Objects.equals(direccion, other.direccion) && Objects.equals(email, other.email)
-				&& Objects.equals(id, other.id) && Objects.equals(nombre, other.nombre)
-				&& Objects.equals(ruc, other.ruc) && Objects.equals(telefono, other.telefono);
+		Integer cod1 = getId();
+        Integer cod2 = ((Cliente)obj).getId();
+        if(cod1.equals(cod2)) return true;
+        return false;
 	}
 	
 	

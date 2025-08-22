@@ -49,6 +49,11 @@ public class Propiedad {
 		return id + " - " + tipoPropiedad + " - " + cliente.getRuc();
 	}
 	
-	
+	public boolean equals(Object obj) {
+        Integer cod1 = getId();
+        Integer cod2 = ((Propiedad)obj).getId();
+        if(cod1.equals(cod2)) return true;
+        return false;
+    }
 	
 }

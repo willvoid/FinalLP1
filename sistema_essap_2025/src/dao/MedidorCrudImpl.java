@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import modelo.Propiedad;
+import modelo.Cliente;
 import modelo.Medidor;
 import vista.GUILogin;
 
@@ -82,9 +83,10 @@ public class MedidorCrudImpl implements crud <Medidor>{
 		ArrayList<Medidor> lista = new ArrayList<>();
 		
 		try {
-            String sql = "select m.*, p.id as id_propiedad from medidores m "
+            String sql = "select m.*, p.id as id_propiedad, c.ruc as ruc from medidores m "
             		+ "inner join propiedades p on p.id=m.fkidpropiedad "
-            		+ "where m.id ||' '|| p.id ilike ? order by id asc";
+            		+ "inner join clientes c on c.id=p.fkidcliente "
+            		+ "where m.id ||' '|| c.ruc ilike ? order by m.id asc";
             sentencia = conec.prepareStatement(sql);
             sentencia.setString(1, "%" + textoBuscado + "%");
             ResultSet rs = sentencia.executeQuery();
@@ -93,6 +95,7 @@ public class MedidorCrudImpl implements crud <Medidor>{
             while (rs.next()) {
                 Medidor medidor = new Medidor();
                 Propiedad propiedad = new Propiedad();
+                Cliente cliente = new Cliente();
                 
                 medidor.setId(rs.getInt("id"));
                 medidor.setFechaInicio(rs.getDate("fecha_inicio"));
@@ -104,9 +107,13 @@ public class MedidorCrudImpl implements crud <Medidor>{
                 
                 
                 //Dar valor a variable propiedad
-                propiedad.setId(rs.getInt("fkidpropiedad"));
+                //propiedad.setId(rs.getInt("fkidpropiedad"));
                 propiedad.setId(rs.getInt("id_propiedad"));
                 medidor.setPropiedad(propiedad);
+                
+             // Setear cliente dentro de propiedad
+                cliente.setRuc(rs.getString("ruc"));
+                propiedad.setCliente(cliente);
                 
                 lista.add(medidor);
             }

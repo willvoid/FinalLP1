@@ -10,7 +10,7 @@ import modelo.Medidor;
 public class MedidorTablaModel extends AbstractTableModel {
 		List<Medidor> lista = new ArrayList<>();
 
-	    private String[] columnas = {"NRO MEDIDOR", "ID PROPIEDAD", "INICIO CICLO","FIN CICLO", "LECTURA INICIAL", "LECTURA CIERRE", "CONSUMO", "DIAS FACTURADOS"};
+	    private String[] columnas = {"NRO MEDIDOR", "ID PROPIEDAD","INICIO CICLO","FIN CICLO", "LECTURA INICIAL", "LECTURA CIERRE", "CONSUMO", "DIAS FACTURADOS","RUC CLIENTE"};
 
 	    public void setLista(List<Medidor> lista) {
 	        // Inicializamos las lista de marcas
@@ -46,6 +46,8 @@ public class MedidorTablaModel extends AbstractTableModel {
 	                return medidor.getConsumo();
 	            case 7:
 	                return medidor.getDiasFacturados();
+	            case 8:
+	                return medidor.getPropiedad().getCliente().getRuc();
 	            default:
 	                return null;
 	        }

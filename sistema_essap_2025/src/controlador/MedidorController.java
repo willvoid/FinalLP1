@@ -144,12 +144,12 @@ public class MedidorController implements ActionListener, KeyListener {
                 JOptionPane.showMessageDialog(gui, "favor completar los datos");
                 return;
             }
-            /*Integer indexSeleccionado = gui.cbo_propiedad.getSelectedIndex();
+            Integer indexSeleccionado = gui.cbo_propiedad.getSelectedIndex();
             
             if (indexSeleccionado==0) {
             	JOptionPane.showMessageDialog(gui, "Seleccione una categoría válida.");
                 return;
-            }*/
+            }
             
             System.out.println("Evento click de guardar");
             if (operacion == 'N') {
@@ -186,8 +186,8 @@ public class MedidorController implements ActionListener, KeyListener {
         gui.cbo_propiedad.setEnabled(estado);
         gui.txt_consumo.setEnabled(estado);
         gui.txt_dias_facturados.setEnabled(estado);
-        gui.txt_fecha_fin.setEnabled(estado);
-        gui.txt_fecha_inicio.setEnabled(estado);
+        gui.txt_fecha_fin.setEnabled(false);
+        gui.txt_fecha_inicio.setEnabled(false);
         gui.txt_lectura_cierre.setEnabled(estado);
         gui.txt_lectura_inicio.setEnabled(estado);
     }
@@ -195,10 +195,12 @@ public class MedidorController implements ActionListener, KeyListener {
     private void habilitarBoton(Boolean estado) {
         gui.btn_guardar.setEnabled(estado);
         gui.btn_cancelar.setEnabled(estado);
+        gui.btn_calendario1.setEnabled(estado);
+        gui.btn_calendario2.setEnabled(estado);
     }
 
     private void limpiar() {
-    	//gui.cbo_propiedad.setEnabled(estado);
+    	gui.cbo_propiedad.setSelectedIndex(0);
         gui.txt_consumo.setText("");
         gui.txt_dias_facturados.setText("");
         gui.txt_fecha_fin.setText("");
@@ -221,9 +223,9 @@ public class MedidorController implements ActionListener, KeyListener {
     
     private boolean validarDatos() {
         boolean vacio = false;
-        /*if (gui.cbo_propiedad.getSelectedIndex() == 0) {
+        if (gui.cbo_propiedad.getSelectedIndex() == 0) {
             vacio = true;
-        }*/
+        }
         if (gui.txt_consumo.getText().isEmpty()) {
             vacio = true;
         }
@@ -296,16 +298,18 @@ public class MedidorController implements ActionListener, KeyListener {
         DefaultComboBoxModel<Propiedad> model = new DefaultComboBoxModel();
         
         // Agregar el item "Seleccionar Producto"
-        /*Propiedad seleccionar = new Propiedad();
+        Propiedad seleccionar = new Propiedad();
+        Cliente cliente = new Cliente();
         seleccionar.setId(0); // id especial para distinguir
         seleccionar.setTipoPropiedad("Seleccionar");
-        seleccionar.setCliente().equals(seleccionar);
-        model.addElement(seleccionar);*/
+        cliente.setRuc(">");
+        seleccionar.setCliente(cliente);
+        model.addElement(seleccionar);
         //AutoCompleteDecorator.decorate(cbo);
         List<Propiedad> lista = crudPropiedad.listar("");
         for (int i = 0; i < lista.size(); i++) {
-            Propiedad cliente = lista.get(i);
-            model.addElement(cliente);
+            Propiedad propiedad = lista.get(i);
+            model.addElement(propiedad);
         }
         cbo.setModel(model);
     }

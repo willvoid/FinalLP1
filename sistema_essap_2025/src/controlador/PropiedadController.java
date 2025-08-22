@@ -171,7 +171,7 @@ public class PropiedadController implements ActionListener, KeyListener {
         gui.txt_dimension.setText("");
         gui.cbo_propietario.setSelectedIndex(0);
         gui.txt_ubicacion.setText("");
-
+        gui.cbo_propiedad.setSelectedIndex(0);
         gui.cbo_propiedad.setSelectedIndex(0);
     }
 
@@ -222,6 +222,7 @@ public class PropiedadController implements ActionListener, KeyListener {
         
         // Agregar el item "Seleccionar Producto"
         Cliente seleccionar = new Cliente();
+        seleccionar.setId(-1);
         seleccionar.setRuc("0"); // Ruc especial para distinguir
         seleccionar.setNombre("Seleccionar");
         seleccionar.setApellido("Propietario");
