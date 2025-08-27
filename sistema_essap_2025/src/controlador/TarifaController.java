@@ -6,47 +6,26 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-//import com.formdev.flatlaf.json.ParseException;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.table.TableModel;
+import dao.TarifaCrudImpl;
+import modelo.Tarifa;
+import tabla.TarifaTablaModel;
+import vista.GUITarifa;
 
-//import com.formdev.flatlaf.json.ParseException;
-
-import dao.MedidorCrudImpl;
-import dao.PropiedadCrudImpl;
-import dao.MedidorCrudImpl;
-import modelo.Cliente;
-import modelo.Medidor;
-import modelo.Medidor;
-import modelo.Propiedad;
-import modelo.Medidor;
-import tabla.MedidorTablaModel;
-import vista.GUICalendario;
-import vista.GUIMedidor;
-
-public class MedidorController implements ActionListener, KeyListener {
+public class TarifaController implements ActionListener, KeyListener {
 	
-	private GUIMedidor gui;
-	
-    private MedidorCrudImpl crud;
-    private PropiedadCrudImpl crudPropiedad = new PropiedadCrudImpl();
+	private GUITarifa gui;
+    private TarifaCrudImpl crud;
+
     private char operacion;
-    Medidor medidor = new Medidor();
-    
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    Tarifa tarifa = new Tarifa();
 
-    MedidorTablaModel modelo = new MedidorTablaModel();
+    TarifaTablaModel modelo = new TarifaTablaModel();
     
-    public MedidorController(GUIMedidor gui, MedidorCrudImpl crud) {
+    public TarifaController(GUITarifa gui, TarifaCrudImpl crud) {
         this.gui = gui;
         this.crud = crud;
         this.gui.btn_guardar.addActionListener(this);
@@ -61,16 +40,16 @@ public class MedidorController implements ActionListener, KeyListener {
             public void mouseClicked(MouseEvent e) {
                 JTable tabla = (JTable) e.getSource();
                 int row = tabla.rowAtPoint(e.getPoint());
-                MedidorTablaModel model = (MedidorTablaModel) tabla.getModel();
+                TarifaTablaModel model = (TarifaTablaModel) tabla.getModel();
                 //Devolver el objeto seleccionado en la fila
 
-                setLecturaForm(model.getMedidorByRow(row));
+                setTarifaForm(model.getTarifaByRow(row));
             }
         });
 
         habilitarCampos(false);
         habilitarBoton(false);
-        llenarComboPropiedad(gui.cbo_propiedad);
+
         listar("");
     }
     
@@ -80,7 +59,7 @@ public class MedidorController implements ActionListener, KeyListener {
     }
 
     public void listar(String valorBuscado) {
-        List<Medidor> lista = crud.listar(valorBuscado);
+        List<Tarifa> lista = crud.listar(valorBuscado);
         modelo.setLista(lista);
         gui.table.setModel(modelo);
         gui.table.updateUI();
@@ -94,20 +73,18 @@ public class MedidorController implements ActionListener, KeyListener {
             String valor = gui.txt_buscar.getText();
             listar(valor);
         }
-        
-        
         if (e.getSource() == gui.btn_nuevo) {
             operacion = 'N';
             limpiar();
             habilitarCampos(true);
             habilitarBoton(true);
-            gui.cbo_propiedad.requestFocus();
+            gui.txt_rangoMin.requestFocus();
         }
         if (e.getSource() == gui.btn_editar) {
             operacion = 'E';
             habilitarCampos(true);
             habilitarBoton(true);
-            gui.cbo_propiedad.requestFocus();
+            gui.txt_rangoMin.requestFocus();
         }
 
         if (e.getSource() == gui.btn_eliminar) {
@@ -119,7 +96,7 @@ public class MedidorController implements ActionListener, KeyListener {
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE);
                 if (ok == 0) {
-                    crud.eliminar(modelo.getMedidorByRow(fila));
+                    crud.eliminar(modelo.getTarifaByRow(fila));
                     listar("");
                     limpiar();
                 }
@@ -139,31 +116,16 @@ public class MedidorController implements ActionListener, KeyListener {
                 JOptionPane.showMessageDialog(gui, "favor completar los datos");
                 return;
             }
-            Integer indexSeleccionado = gui.cbo_propiedad.getSelectedIndex();
-            
-            if (indexSeleccionado==0) {
-            	JOptionPane.showMessageDialog(gui, "Seleccione una categoría válida.");
-                return;
-            }
             
             System.out.println("Evento click de guardar");
             if (operacion == 'N') {
-                try {
-					crud.insertar(getLecturaForm());
-				} catch (ParseException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+                crud.insertar(getTarifaForm());
 
+                gui.txt_rangoMin.requestFocus();
             }
 
             if (operacion == 'E') {
-                try {
-					crud.actualizar(getLecturaForm());
-				} catch (ParseException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+                crud.actualizar(getTarifaForm());
                 habilitarCampos(false);
             }
 
@@ -178,7 +140,10 @@ public class MedidorController implements ActionListener, KeyListener {
 	
 	//Metodo encargado de habilitar o deshabilitar los campos
     private void habilitarCampos(Boolean estado) {
-        gui.cbo_propiedad.setEnabled(estado);
+        gui.txt_rangoMin.setEnabled(estado);
+        gui.txt_rangoMax.setEnabled(estado);
+        gui.txt_precioM3.setEnabled(estado);
+        gui.txt_cargoFijo.setEnabled(estado);
     }
 
     private void habilitarBoton(Boolean estado) {
@@ -187,71 +152,52 @@ public class MedidorController implements ActionListener, KeyListener {
     }
 
     private void limpiar() {
-    	gui.cbo_propiedad.setSelectedIndex(0);
+        gui.txt_rangoMin.setText("");
+        gui.txt_rangoMax.setText("");
+        gui.txt_precioM3.setText("");
+        gui.txt_cargoFijo.setText("");
     }
 
     // funcion o metodo encargado de recuperrar los valores de los JTextField en un objeto
-    private Medidor getLecturaForm() throws ParseException {
-        medidor.setPropiedad((Propiedad) gui.cbo_propiedad.getSelectedItem());
-        return medidor;
+    private Tarifa getTarifaForm() {
+        tarifa.setRango_min(Integer.valueOf(gui.txt_rangoMin.getText()));
+        tarifa.setRango_max(Integer.valueOf(gui.txt_rangoMax.getText()));
+        tarifa.setPrecio_m3(Integer.valueOf(gui.txt_precioM3.getText()));
+        tarifa.setCargo_fijo(Integer.valueOf(gui.txt_cargoFijo.getText()));
+        return tarifa;
     }
     
     private boolean validarDatos() {
         boolean vacio = false;
-        if (gui.cbo_propiedad.getSelectedIndex() == 0) {
+        if (gui.txt_cargoFijo.getText().isEmpty()) {
+            vacio = true;
+        }
+        if (gui.txt_precioM3.getText().isEmpty()) {
+            vacio = true;
+        }
+        if (gui.txt_rangoMax.getText().isEmpty()) {
+            vacio = true;
+        }
+        if (gui.txt_rangoMax.getText().isEmpty()) {
+            vacio = true;
+        }
+        if (gui.txt_rangoMin.getText().isEmpty()) {
             vacio = true;
         }
         return vacio;
     }
 
     //Funcion o metodo encargado asignar valor los JTextField
-    private void setLecturaForm(Medidor item) {
+    private void setTarifaForm(Tarifa item) {
         System.out.println(item);
-        medidor.setId(item.getId());
-        gui.cbo_propiedad.setSelectedItem(item.getPropiedad());
+        tarifa.setId(item.getId());
+        gui.txt_cargoFijo.setText(item.getCargo_fijo().toString());
+        gui.txt_precioM3.setText(item.getPrecio_m3().toString());
+        gui.txt_rangoMax.setText(item.getRango_max().toString());
+        gui.txt_rangoMin.setText(item.getRango_min().toString());
 
     }
-    
 
-    
-    private void llamarCalendario(JTextField txt) {
-    	GUICalendario guicalen = new GUICalendario (null, true);
-        CalendarioController calenCtrl = new CalendarioController(guicalen, txt);
-        calenCtrl.mostrarVentana();
-    }
-    
-    private String setTextDate (java.util.Date fechaRecibida) {
-    	String fechaStr = "";
-    	if (fechaRecibida != null) {
-            java.util.Date fecha = new java.util.Date(fechaRecibida.getTime()); // Convertir de java.sql.Date a java.util.Date
-            fechaStr = sdf.format(fecha);
-    	}
-    	return fechaStr;
-    }
-    
-    private void llenarComboPropiedad(JComboBox cbo){
-        DefaultComboBoxModel<Propiedad> model = new DefaultComboBoxModel();
-        
-        // Agregar el item
-        
-        Propiedad seleccionar = new Propiedad();
-        Cliente cliente = new Cliente();
-        seleccionar.setId(0); // id especial para distinguir
-        seleccionar.setTipoPropiedad("Seleccionar");
-        
-        cliente.setRuc("->");
-        seleccionar.setCliente(cliente);
-        
-        model.addElement(seleccionar);
-        //AutoCompleteDecorator.decorate(cbo);
-        List<Propiedad> lista = crudPropiedad.listar("");
-        for (int i = 0; i < lista.size(); i++) {
-            Propiedad propiedad = lista.get(i);
-            model.addElement(propiedad);
-        }
-        cbo.setModel(model);
-    }
-    
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub

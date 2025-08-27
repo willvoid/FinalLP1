@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import modelo.Medidor;
 import modelo.Propiedad;
 import modelo.Cliente;
 import modelo.Medidor;
@@ -27,16 +28,11 @@ public class MedidorCrudImpl implements crud <Medidor>{
 
 	public void insertar(Medidor obj) {
 		try {
-            String sql = "INSERT INTO medidores (fkidpropiedad,fecha_inicio,fecha_fin,lectura_inicio,lectura_cierre,consumo,dias_facturados) VALUES (?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO medidores (fkidpropiedades) VALUES (?)";
             sentencia = conec.prepareStatement(sql);
             //Dar valor a los parametros "?"
             sentencia.setInt(1, obj.getPropiedad().getId());
-            sentencia.setDate(2, dateToSqlDate(obj.getFechaInicio()));
-            sentencia.setDate(3, dateToSqlDate(obj.getFechaFin()));
-            sentencia.setInt(4, obj.getLecturaInicio());
-            sentencia.setInt(5, obj.getLecturaCierre());
-            sentencia.setInt(6, obj.getConsumo());
-            sentencia.setInt(7, obj.getDiasFacturados());
+            
 
             sentencia.executeUpdate();//Ejecutar Sentencia
         } catch (SQLException e) {
@@ -47,17 +43,11 @@ public class MedidorCrudImpl implements crud <Medidor>{
 
 	public void actualizar(Medidor obj) {
 		try {
-			String sql = "UPDATE medidores SET fkidpropiedad=?,fecha_inicio=?,fecha_fin=?,lectura_inicio=?,lectura_cierre=?,consumo=?,dias_facturados=? WHERE id=?";
+			String sql = "UPDATE medidores SET fkidpropiedades=? WHERE id=?";
 			sentencia = conec.prepareStatement(sql);
             //Dar valor a los parametros "?"
 			sentencia.setInt(1, obj.getPropiedad().getId());
-            sentencia.setDate(2, dateToSqlDate(obj.getFechaInicio()));
-            sentencia.setDate(3, dateToSqlDate(obj.getFechaFin()));
-            sentencia.setInt(4, obj.getLecturaInicio());
-            sentencia.setInt(5, obj.getLecturaCierre());
-            sentencia.setInt(6, obj.getConsumo());
-            sentencia.setInt(7, obj.getDiasFacturados());
-            sentencia.setInt(8, obj.getId());
+            sentencia.setInt(2, obj.getId());
             
             sentencia.executeUpdate();//Ejecutar Sentencia
 		} catch (SQLException e) {
@@ -83,10 +73,10 @@ public class MedidorCrudImpl implements crud <Medidor>{
 		ArrayList<Medidor> lista = new ArrayList<>();
 		
 		try {
-            String sql = "select m.*, p.id as id_propiedad, c.ruc as ruc from medidores m "
-            		+ "inner join propiedades p on p.id=m.fkidpropiedad "
+            String sql = "select m.*, p.tipopropiedad as tipo, c.ruc as ruc from medidores m "
+            		+ "inner join propiedades p on m.fkidpropiedades = p.id "
             		+ "inner join clientes c on c.id=p.fkidcliente "
-            		+ "where m.id ||' '|| c.ruc ilike ? order by m.id asc";
+            		+ "where m.id ||' '|| p.tipopropiedad ilike ?";
             sentencia = conec.prepareStatement(sql);
             sentencia.setString(1, "%" + textoBuscado + "%");
             ResultSet rs = sentencia.executeQuery();
@@ -98,22 +88,18 @@ public class MedidorCrudImpl implements crud <Medidor>{
                 Cliente cliente = new Cliente();
                 
                 medidor.setId(rs.getInt("id"));
-                medidor.setFechaInicio(rs.getDate("fecha_inicio"));
-                medidor.setFechaFin(rs.getDate("fecha_fin"));
-                medidor.setLecturaInicio(rs.getInt("lectura_inicio"));
-                medidor.setLecturaCierre(rs.getInt("lectura_cierre"));
-                medidor.setDiasFacturados(rs.getInt("dias_facturados"));
-                medidor.setConsumo(rs.getInt("consumo"));
                 
                 
                 //Dar valor a variable propiedad
-                //propiedad.setId(rs.getInt("fkidpropiedad"));
-                propiedad.setId(rs.getInt("id_propiedad"));
-                medidor.setPropiedad(propiedad);
+                propiedad.setId(rs.getInt("id"));
+                propiedad.setTipoPropiedad(rs.getString("tipo"));
                 
-             // Setear cliente dentro de propiedad
+                
+                
                 cliente.setRuc(rs.getString("ruc"));
                 propiedad.setCliente(cliente);
+                medidor.setPropiedad(propiedad);
+                
                 
                 lista.add(medidor);
             }

@@ -5,14 +5,14 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import modelo.Medidor;
+import modelo.Tarifa;
 
-public class MedidorTablaModel extends AbstractTableModel {
-		List<Medidor> lista = new ArrayList<>();
+public class TarifaTablaModel extends AbstractTableModel {
+		List<Tarifa> lista = new ArrayList<>();
 
-	    private String[] columnas = {"ID LECTURA", "ID PROPIEDAD", "TIPO PROPIEDAD", "RUC CLIENTE"};
+	    private String[] columnas = {"ID", "RANGO MIN", "RANGO MAX","PRECIO M3", "CARGO FIJO"};
 
-	    public void setLista(List<Medidor> lista) {
+	    public void setLista(List<Tarifa> lista) {
 	        // Inicializamos las lista de marcas
 	    	this.lista = (lista != null) ? lista : new ArrayList<>();
 	    }
@@ -28,16 +28,18 @@ public class MedidorTablaModel extends AbstractTableModel {
 	    }
 
 	    public Object getValueAt(int fila, int columna) {
-	        Medidor medidor = lista.get(fila);
+	        Tarifa tarifa = lista.get(fila);
 	        switch (columna) {
 	            case 0:
-	                return medidor.getId();
+	                return tarifa.getId();
 	            case 1:
-	                return medidor.getPropiedad().getId();
+	                return tarifa.getRango_min();
 	            case 2:
-	            	return medidor.getPropiedad().getTipoPropiedad();
+	                return tarifa.getRango_max();
 	            case 3:
-	            	return medidor.getPropiedad().getCliente().getRuc();
+	                return tarifa.getPrecio_m3();
+	            case 4:
+	                return tarifa.getCargo_fijo();  
 	            default:
 	                return null;
 	        }
@@ -47,7 +49,7 @@ public class MedidorTablaModel extends AbstractTableModel {
 	        return columnas[column];
 	    }
 
-	    public Medidor getMedidorByRow(int index) {
+	    public Tarifa getTarifaByRow(int index) {
 	        return lista.get(index);
 	    }
 

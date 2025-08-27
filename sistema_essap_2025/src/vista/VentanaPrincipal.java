@@ -3,19 +3,20 @@ package vista;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
 import controlador.ClienteController;
+import controlador.LecturaController;
 import controlador.MedidorController;
 import controlador.NuevoUsuarioController;
 import controlador.PropiedadController;
+import controlador.TarifaController;
 import dao.ClienteCrudImpl;
+import dao.LecturaCrudImpl;
 import dao.MedidorCrudImpl;
 import dao.PropiedadCrudImpl;
+import dao.TarifaCrudImpl;
 import dao.UsuarioCrudImpl;
 
-import javax.swing.JLayeredPane;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -93,7 +94,10 @@ public class VentanaPrincipal extends JFrame {
 		});
 		mnNewMenu_1.add(mntmNewMenuItem_2);
 		
-		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Medidores");
+		JMenu mnNewMenu_3 = new JMenu("Medidores");
+		menuBar.add(mnNewMenu_3);
+		
+		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Gestionar Medidores");
 		mntmNewMenuItem_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GUIMedidor medidor = new GUIMedidor();
@@ -102,7 +106,32 @@ public class VentanaPrincipal extends JFrame {
 		        ctrl.mostrarVentana();
 			}
 		});
-		mnNewMenu_1.add(mntmNewMenuItem_3);
+		mnNewMenu_3.add(mntmNewMenuItem_3);
+		
+		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Lecturas");
+		mntmNewMenuItem_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GUILectura medidor = new GUILectura();
+		        LecturaCrudImpl crud = new LecturaCrudImpl();
+		        LecturaController ctrl = new LecturaController(medidor, crud);
+		        ctrl.mostrarVentana();
+			}
+		});
+		mnNewMenu_3.add(mntmNewMenuItem_5);
+		
+		JMenu mnNewMenu_2 = new JMenu("Facturacion");
+		menuBar.add(mnNewMenu_2);
+		
+		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Tarifas");
+		mntmNewMenuItem_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GUITarifa tarifa = new GUITarifa();
+		        TarifaCrudImpl crud = new TarifaCrudImpl();
+		        TarifaController ctrl = new TarifaController(tarifa, crud);
+		        ctrl.mostrarVentana();
+			}
+		});
+		mnNewMenu_2.add(mntmNewMenuItem_4);
 
 	}
 
