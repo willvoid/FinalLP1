@@ -114,7 +114,7 @@ public class GUILectura extends JDialog {
 		btn_cancelar.setBounds(178, 424, 89, 23);
 		desktopPane.add(btn_cancelar);
 		
-		lblNewLabel = new JLabel("Nombre");
+		lblNewLabel = new JLabel("Medidor");
 		lblNewLabel.setBounds(78, 11, 46, 14);
 		desktopPane.add(lblNewLabel);
 		

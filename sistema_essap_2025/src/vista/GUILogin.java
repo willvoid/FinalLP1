@@ -24,6 +24,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
 
 public class GUILogin extends JDialog {
 
@@ -32,6 +33,7 @@ public class GUILogin extends JDialog {
 	public JTextField txt_usuario;
 	public JPasswordField txt_contraseña;
 	public JButton btn_login = new JButton("Iniciar Sesión");
+	private final JLabel lblNewLabel_2 = new JLabel("");
 
 	/**
 	 * Launch the application.
@@ -67,7 +69,8 @@ public class GUILogin extends JDialog {
 	 * Create the dialog.
 	 */
 	public GUILogin() {
-		setBounds(100, 100, 481, 386);
+		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\Windows 11\\Documents\\Facultad\\LP 1\\img\\user1.png"));
+		setBounds(100, 100, 779, 528);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -99,31 +102,37 @@ public class GUILogin extends JDialog {
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_contentPanel.createSequentialGroup()
-					.addContainerGap(173, Short.MAX_VALUE)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
-						.addComponent(btn_login, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING, false)
-							.addComponent(lblNewLabel_1)
-							.addComponent(lblNewLabel)
-							.addComponent(txt_contraseña, 163, 163, Short.MAX_VALUE)
-							.addComponent(txt_usuario, GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)))
-					.addGap(161))
+				.addGroup(gl_contentPanel.createSequentialGroup()
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addGap(324)
+							.addComponent(lblNewLabel_2))
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addGap(262)
+							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(lblNewLabel)
+								.addComponent(lblNewLabel_1)
+								.addComponent(btn_login, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(txt_contraseña, GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+								.addComponent(txt_usuario))))
+					.addContainerGap(280, Short.MAX_VALUE))
 		);
 		gl_contentPanel.setVerticalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addGap(90)
+			gl_contentPanel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, gl_contentPanel.createSequentialGroup()
+					.addGap(65)
+					.addComponent(lblNewLabel_2)
+					.addGap(37)
 					.addComponent(lblNewLabel)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(txt_usuario, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
-					.addGap(27)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(lblNewLabel_1)
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(txt_contraseña, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addComponent(btn_login, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(64, Short.MAX_VALUE))
+					.addContainerGap(179, Short.MAX_VALUE))
 		);
 		btn_login.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

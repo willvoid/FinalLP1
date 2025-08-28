@@ -23,6 +23,9 @@ import javax.swing.JMenuItem;
 import java.awt.CardLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JLayeredPane;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -52,13 +55,23 @@ public class VentanaPrincipal extends JFrame {
 		setBounds(100, 100, 866, 465);
 		getContentPane().setLayout(new CardLayout(0, 0));
 		
+		JLayeredPane layeredPane = new JLayeredPane();
+		getContentPane().add(layeredPane, "name_779560909941400");
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Windows 11\\Documents\\Facultad\\LP 1\\img\\logoessap.png"));
+		lblNewLabel.setBounds(444, 239, 406, 165);
+		layeredPane.add(lblNewLabel);
+		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
 		JMenu mnNewMenu = new JMenu("Usuarios");
+		mnNewMenu.setIcon(new ImageIcon("C:\\Users\\Windows 11\\Documents\\Facultad\\LP 1\\img\\usuario.png"));
 		menuBar.add(mnNewMenu);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Nuevo Usuario");
+		mntmNewMenuItem.setIcon(new ImageIcon("C:\\Users\\Windows 11\\Documents\\Facultad\\LP 1\\img\\nuevo-cliente.png"));
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GUINuevoUsuario nusuario = new GUINuevoUsuario();
@@ -70,9 +83,11 @@ public class VentanaPrincipal extends JFrame {
 		mnNewMenu.add(mntmNewMenuItem);
 		
 		JMenu mnNewMenu_1 = new JMenu("Clientes");
+		mnNewMenu_1.setIcon(new ImageIcon("C:\\Users\\Windows 11\\Documents\\Facultad\\LP 1\\img\\cliente.png"));
 		menuBar.add(mnNewMenu_1);
 		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Administrar Clientes");
+		mntmNewMenuItem_1.setIcon(new ImageIcon("C:\\Users\\Windows 11\\Documents\\Facultad\\LP 1\\img\\nuevo-cliente.png"));
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GUIClientes cliente = new GUIClientes();
@@ -84,6 +99,7 @@ public class VentanaPrincipal extends JFrame {
 		mnNewMenu_1.add(mntmNewMenuItem_1);
 		
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Residencias");
+		mntmNewMenuItem_2.setIcon(new ImageIcon("C:\\Users\\Windows 11\\Documents\\Facultad\\LP 1\\img\\icons8-casa-batlló-48.png"));
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GUIPropiedad propiedad = new GUIPropiedad();
@@ -95,9 +111,11 @@ public class VentanaPrincipal extends JFrame {
 		mnNewMenu_1.add(mntmNewMenuItem_2);
 		
 		JMenu mnNewMenu_3 = new JMenu("Medidores");
+		mnNewMenu_3.setIcon(new ImageIcon("C:\\Users\\Windows 11\\Documents\\Facultad\\LP 1\\img\\categorias.png"));
 		menuBar.add(mnNewMenu_3);
 		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Gestionar Medidores");
+		mntmNewMenuItem_3.setIcon(new ImageIcon("C:\\Users\\Windows 11\\Documents\\Facultad\\LP 1\\img\\nuevo.png"));
 		mntmNewMenuItem_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GUIMedidor medidor = new GUIMedidor();
@@ -109,6 +127,7 @@ public class VentanaPrincipal extends JFrame {
 		mnNewMenu_3.add(mntmNewMenuItem_3);
 		
 		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Lecturas");
+		mntmNewMenuItem_5.setIcon(new ImageIcon("C:\\Users\\Windows 11\\Documents\\Facultad\\LP 1\\img\\historial1.png"));
 		mntmNewMenuItem_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GUILectura medidor = new GUILectura();
@@ -120,9 +139,11 @@ public class VentanaPrincipal extends JFrame {
 		mnNewMenu_3.add(mntmNewMenuItem_5);
 		
 		JMenu mnNewMenu_2 = new JMenu("Facturacion");
+		mnNewMenu_2.setIcon(new ImageIcon("C:\\Users\\Windows 11\\Documents\\Facultad\\LP 1\\img\\anadir.png"));
 		menuBar.add(mnNewMenu_2);
 		
 		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Tarifas");
+		mntmNewMenuItem_4.setIcon(new ImageIcon("C:\\Users\\Windows 11\\Documents\\Facultad\\LP 1\\img\\producto.png"));
 		mntmNewMenuItem_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GUITarifa tarifa = new GUITarifa();
@@ -134,6 +155,5 @@ public class VentanaPrincipal extends JFrame {
 		mnNewMenu_2.add(mntmNewMenuItem_4);
 
 	}
-
 }
 

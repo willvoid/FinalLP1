@@ -76,7 +76,7 @@ public class MedidorCrudImpl implements crud <Medidor>{
             String sql = "select m.*, p.tipopropiedad as tipo, c.ruc as ruc from medidores m "
             		+ "inner join propiedades p on m.fkidpropiedades = p.id "
             		+ "inner join clientes c on c.id=p.fkidcliente "
-            		+ "where m.id ||' '|| p.tipopropiedad ilike ?";
+            		+ "where m.id ||' '|| c.ruc ||' '|| p.tipopropiedad ilike ?";
             sentencia = conec.prepareStatement(sql);
             sentencia.setString(1, "%" + textoBuscado + "%");
             ResultSet rs = sentencia.executeQuery();
@@ -91,7 +91,7 @@ public class MedidorCrudImpl implements crud <Medidor>{
                 
                 
                 //Dar valor a variable propiedad
-                propiedad.setId(rs.getInt("id"));
+                propiedad.setId(rs.getInt("fkidpropiedades"));
                 propiedad.setTipoPropiedad(rs.getString("tipo"));
                 
                 

@@ -19,7 +19,7 @@ public class Medidor {
 	}
 	@Override
 	public String toString() {
-		return id + " - " + propiedad.getTipoPropiedad();
+		return "Número de Medidor=" + id;
 	}
 	
 	@Override

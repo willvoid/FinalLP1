@@ -302,8 +302,7 @@ public class LecturaController implements ActionListener, KeyListener {
         Medidor seleccionar = new Medidor();
         Propiedad propiedad = new Propiedad();
         seleccionar.setId(0); // id especial para distinguir
-        propiedad.setTipoPropiedad("Seleccionar");
-        seleccionar.setPropiedad(propiedad);
+        
         
         model.addElement(seleccionar);
         //AutoCompleteDecorator.decorate(cbo);

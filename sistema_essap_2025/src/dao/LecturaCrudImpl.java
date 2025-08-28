@@ -83,9 +83,9 @@ public class LecturaCrudImpl implements crud <Lectura>{
 		ArrayList<Lectura> lista = new ArrayList<>();
 		
 		try {
-            String sql = "select l.*, m.id as id_medidor, c.ruc as ruc from lecturas l "
+            String sql = "select l.*, m.id as id_medidor from lecturas l "
             		+ "inner join medidores m on m.id=l.fkidmedidor "
-            		+ "where m.id ||' '|| l.fecha_fin ilike ? order by l.id asc";
+            		+ "where m.id ||' '|| l.fecha_fin ilike ? order by l.id ";
             sentencia = conec.prepareStatement(sql);
             sentencia.setString(1, "%" + textoBuscado + "%");
             ResultSet rs = sentencia.executeQuery();
@@ -114,7 +114,7 @@ public class LecturaCrudImpl implements crud <Lectura>{
             }
 
         } catch (SQLException ex) {
-        	System.out.print("Error al listar medidor: " + ex);
+        	System.out.print("Error al listar lectura: " + ex);
         }
 		
 		return lista;

@@ -10,7 +10,7 @@ import modelo.Lectura;
 public class LecturaTablaModel extends AbstractTableModel {
 		List<Lectura> lista = new ArrayList<>();
 
-	    private String[] columnas = {"ID LECTURA", "ID MEDIDOR","INICIO CICLO","FIN CICLO", "LECTURA INICIAL", "LECTURA CIERRE", "CONSUMO", "DIAS FACTURADOS"};
+	    private String[] columnas = {"ID LECTURA", "NRO MEDIDOR","INICIO CICLO","FIN CICLO", "LECTURA INICIAL", "LECTURA CIERRE", "CONSUMO", "DIAS FACTURADOS"};
 
 	    public void setLista(List<Lectura> lista) {
 	        // Inicializamos las lista de marcas
